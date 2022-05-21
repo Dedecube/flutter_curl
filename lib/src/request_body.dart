@@ -9,43 +9,43 @@ enum _BodyType {
 }
 
 class RequestBody {
-  _BodyType? _type;
-  late List<int> _raw;
-  late String _string;
-  late String _file;
-  Map<String, dynamic>? _form;
-  late List<Multipart> _multipart;
+  _BodyType? type;
+  late List<int> raw;
+  late String string;
+  late String file;
+  Map<String, dynamic>? form;
+  late List<Multipart> multipart;
 
   RequestBody._();
 
   factory RequestBody.raw(List<int> data) {
     return RequestBody._()
-      .._type = _BodyType.raw
-      .._raw = data;
+      ..type = _BodyType.raw
+      ..raw = data;
   }
 
   factory RequestBody.file(String path) {
     return RequestBody._()
-      .._type = _BodyType.raw
-      .._file = path;
+      ..type = _BodyType.raw
+      ..file = path;
   }
 
   factory RequestBody.string(String content) {
     return RequestBody._()
-      .._type = _BodyType.string
-      .._string = content;
+      ..type = _BodyType.string
+      ..string = content;
   }
 
   factory RequestBody.form(Map<String, String> params) {
     return RequestBody._()
-      .._type = _BodyType.form
-      .._form = params;
+      ..type = _BodyType.form
+      ..form = params;
   }
 
   factory RequestBody.multipart(List<Multipart> data) {
     return RequestBody._()
-      .._type = _BodyType.multipart
-      .._multipart = data;
+      ..type = _BodyType.multipart
+      ..multipart = data;
   }
 }
 
