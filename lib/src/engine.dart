@@ -30,8 +30,8 @@ class _Engine {
 
     logData[req.id] = StreamController<LogInfo>();
 
-    if (req.body?._type == _BodyType.file) {
-      uploadFiles[req.id] = File(req.body!._file).openSync();
+    if (req.body?.type == _BodyType.file) {
+      uploadFiles[req.id] = File(req.body!.file).openSync();
     }
 
     if (req._downloadPath != null) {
@@ -202,25 +202,25 @@ class _Engine {
     // add post body
     if (req.method.toLowerCase() == "post" ||
         req.method.toLowerCase() == "put") {
-      if (req.body!._type == _BodyType.string) {
+      if (req.body!.type == _BodyType.string) {
         libCurl.easy_setopt_string(
           handle,
           consts.CURLOPT_POSTFIELDS,
-          req.body!._string.toNativeUtf8(),
+          req.body!.string.toNativeUtf8(),
         );
-      } else if (req.body!._type == _BodyType.raw) {
+      } else if (req.body!.type == _BodyType.raw) {
         libCurl.easy_setopt_string(
           handle,
           consts.CURLOPT_POSTFIELDS,
-          utf8.decode(req.body!._raw, allowMalformed: true).toNativeUtf8(),
+          utf8.decode(req.body!.raw, allowMalformed: true).toNativeUtf8(),
         );
-      } else if (req.body!._type == _BodyType.form) {
+      } else if (req.body!.type == _BodyType.form) {
         libCurl.easy_setopt_string(
           handle,
           consts.CURLOPT_POSTFIELDS,
-          Uri(queryParameters: req.body!._form).query.toNativeUtf8(),
+          Uri(queryParameters: req.body!.form).query.toNativeUtf8(),
         );
-      } else if (req.body!._type == _BodyType.file) {
+      } else if (req.body!.type == _BodyType.file) {
         libCurl.easy_setopt_int(
           handle,
           consts.CURLOPT_UPLOAD,
@@ -241,9 +241,9 @@ class _Engine {
           consts.CURLOPT_READDATA,
           req.id.toNativeUtf8(),
         );
-      } else if (req.body!._type == _BodyType.multipart) {
+      } else if (req.body!.type == _BodyType.multipart) {
         final mime = libCurl.mime_init(handle);
-        for (var p in req.body!._multipart) {
+        for (var p in req.body!.multipart) {
           final mimepart = libCurl.mime_addpart(mime);
           libCurl.mime_name(mimepart, p._name!.toNativeUtf8());
           if (p._type == MultipartType.raw) {
